@@ -1,6 +1,6 @@
 //
 //  CCTVPOC.swift
-//  react-native-react-native-cctvpoc
+//  react-native-cctvpoc
 //
 //  Created by Thanakorn Amnajsatit on 17/12/2563 BE.
 //

@@ -1,6 +1,6 @@
 {
-  "name": "react-native-react-native-cctvpoc",
-  "title": "React Native React Native Cctvpoc",
+  "name": "react-native-cctvpoc",
+  "title": "React Native Cctvpoc",
   "version": "1.0.0",
   "description": "TODO",
   "main": "index.js",
@@ -9,23 +9,20 @@
     "android",
     "index.js",
     "ios",
-    "react-native-react-native-cctvpoc.podspec"
+    "react-native-cctvpoc.podspec"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github_account/react-native-react-native-cctvpoc.git",
-    "baseUrl": "https://github.com/github_account/react-native-react-native-cctvpoc"
+    "url": "git+https://github.com/nat-rojsawang/react-native-cctvpoc.git",
+    "baseUrl": "https://github.com/nat-rojsawang/react-native-cctvpoc"
   },
   "keywords": [
     "react-native"
   ],
-  "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
-  },
+  "author": "Forviz",
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
