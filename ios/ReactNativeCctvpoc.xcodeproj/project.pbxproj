@@ -26,6 +26,7 @@
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libReactNativeCctvpoc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeCctvpoc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF21B6EC2595B36E008A48FC /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		BFDA53DF25AC4E5E0034B1E4 /* FullscreenCCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenCCTV.swift; sourceTree = "<group>"; };
 		C31AAE4B258943D900B0DF1C /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
 		C3ACCFFF258BA62A0055741F /* CCTVPOC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTVPOC.swift; sourceTree = "<group>"; };
 		C3EC43E12587E18C00AA956D /* CCTV.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CCTV.storyboard; sourceTree = "<group>"; };
@@ -60,6 +61,7 @@
 				C31AAE4B258943D900B0DF1C /* assets.xcassets */,
 				C3EC44092587E1DE00AA956D /* CCTVVC.swift */,
 				C3EC43E12587E18C00AA956D /* CCTV.storyboard */,
+				BFDA53DF25AC4E5E0034B1E4 /* FullscreenCCTV.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				C3EC44082587E1DD00AA956D /* ReactNativeCctvpoc-Bridging-Header.h */,
 			);

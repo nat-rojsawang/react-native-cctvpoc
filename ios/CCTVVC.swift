@@ -12,6 +12,7 @@ class CCTVVC: UIViewController {
     @IBOutlet var playerView: UIView?
     @IBOutlet var titleLabel: UILabel?
     @IBOutlet var micButton: UIButton?
+    @IBOutlet var micActiveButton: UIButton!
     @IBOutlet var rorateUpButton: UIButton?
     @IBOutlet var rorateDownButton: UIButton?
     @IBOutlet var rorateLeftButton: UIButton?
@@ -27,6 +28,11 @@ class CCTVVC: UIViewController {
     var apiServerURL: String = ""
     var authServer: String = ""
     var cameraName: String = ""
+    
+    var isMicrophone: Bool = false
+    
+    var isMuted: Bool = false
+    var isMutedActive: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,12 +78,12 @@ class CCTVVC: UIViewController {
         EZGlobalSDK.initLib(withAppKey: appKey)
         EZGlobalSDK.setAccessToken(accessToken)
         
-//        EZGlobalSDK.setVideoLevel(deviceSerialNumber, cameraNo: cameraNumber, videoLevel: 3) { _ in
-//        }
-
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(gesture:)))
-        micButton!.addGestureRecognizer(longPress)
-
+        micButton?.isHidden = false;
+        micActiveButton?.isHidden = true;
+        
+//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(gesture:)))
+//        micButton!.addGestureRecognizer(longPress)
+        
         let rorateUp = UILongPressGestureRecognizer(target: self, action: #selector(rorateUp(gesture:)))
         rorateUpButton!.addGestureRecognizer(rorateUp)
         let rorateDown = UILongPressGestureRecognizer(target: self, action: #selector(rorateDown(gesture:)))
@@ -103,16 +109,30 @@ class CCTVVC: UIViewController {
         player?.setPlayerView(playerView)
         player?.startRealPlay()
     }
-
-    @objc func longPress(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            self.micButton?.setImage(UIImage(named: "microphone_pressed"), for: .normal)
-            player?.startVoiceTalk()
-        } else if gesture.state == .ended {
-            self.micButton?.setImage(UIImage(named: "microphone_default"), for: .normal)
-            player?.stopVoiceTalk()
-        }
+    
+    @IBAction func onMicNone(_ sender: Any) {
+        print("mic_open");
+        isMutedActive = false;
+        micActiveButton.isHidden = false;
+        player?.startVoiceTalk();
     }
+    
+    @IBAction func onMicActive(_ sender: Any) {
+        print("mic_close");
+        isMutedActive = true;
+        micActiveButton.isHidden = true;
+        player?.stopVoiceTalk();
+    }
+    
+//    @objc func longPress(gesture: UILongPressGestureRecognizer) {
+//        if gesture.state == .began {
+//            self.micButton?.setImage(UIImage(named: "microphone_pressed"), for: .normal)
+//            player?.startVoiceTalk()
+//        } else if gesture.state == .ended {
+//            self.micButton?.setImage(UIImage(named: "microphone_default"), for: .normal)
+//            player?.stopVoiceTalk()
+//        }
+//    }
 
     @IBAction func captureScreen() {
         EZGlobalSDK.captureCamera(deviceSerialNumber, cameraNo: cameraNumber) { [self] urlString, _ in
@@ -127,6 +147,77 @@ class CCTVVC: UIViewController {
     @IBAction func back() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    // =====================================================
+    
+    @IBAction func mute(sender: UIButton) {
+        if self.isMuted == false {
+            self.isMuted = true
+            sender.isSelected = true
+            self.player?.closeSound()
+            
+        }else {
+            self.isMuted = false
+            sender.isSelected = false
+            self.player?.openSound()
+        }
+    }
+    
+    @IBAction func selectQuality() {
+        print("selectQuality")
+        let options = UIAlertController(title: "Video Quality", message: nil, preferredStyle: .alert)
+        let option1 = UIAlertAction(title: "Smooth", style: .default) { (action) in
+            self.setVideoQuality(qualityInt: 0)
+        }
+        
+        let option2 = UIAlertAction(title: "Balanced", style: .default) { (action) in
+            self.setVideoQuality(qualityInt: 1)
+        }
+        
+        let option3 = UIAlertAction(title: "HD", style: .default) { (action) in
+            self.setVideoQuality(qualityInt: 2)
+        }
+        
+        let option4 = UIAlertAction(title: "Ultra Clear", style: .default) { (action) in
+            self.setVideoQuality(qualityInt: 3)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
+
+        }
+        
+        options.addAction(option1)
+        options.addAction(option2)
+        options.addAction(option3)
+        options.addAction(option4)
+        options.addAction(cancel)
+        self.present(options, animated: true, completion: nil)
+    }
+    
+    func setVideoQuality(qualityInt: Int) {
+        EZGlobalSDK.setVideoLevel(deviceSerialNumber, cameraNo: cameraNumber, videoLevel: qualityInt) { (error) in
+        }
+    }
+    
+    @IBAction func openFullScreenCCTV() {
+        self.dismiss(animated: true) {
+            CCTVManager.shared.openFullScreenCCTV(accessToken: self.accessToken, appKey: self.appKey, serialNumber: self.deviceSerialNumber, verificationCode: self.verificationCode, apiServerURL: self.apiServerURL, authServer: self.authServer, cameraName: self.cameraName)
+        }
+    }
+    
+    @IBAction func openNomalScreenCCTV() {
+        self.dismiss(animated: true) {
+            CCTVManager.shared.openCCTV(accessToken: self.accessToken, appKey: self.appKey, serialNumber: self.deviceSerialNumber, verificationCode: self.verificationCode, apiServerURL: self.apiServerURL, authServer: self.authServer, cameraName: self.cameraName)
+        }
+
+    }
+    //    @IBAction func openNomalScreenCCTV() {
+//        self.dismiss(animated: true) {
+//            CCTVManager.shared.openCCTV(accessToken: self.accessToken, appKey: self.appKey, serialNumber: self.deviceSerialNumber, verificationCode: self.verificationCode, apiServerURL: self.apiServerURL, authServer: self.authServer, cameraName: self.cameraName)
+//        }
+//    }
+
+    // =====================================================
 
     // MARK: - Save Image callback
 
@@ -184,12 +275,16 @@ extension CCTVVC: EZPlayerDelegate {
 
 class CCTVManager: NSObject {
     static let shared = CCTVManager()
-
+    
     func openCCTV(accessToken: String, appKey: String, serialNumber: String, verificationCode: String, apiServerURL: String, authServer: String, cameraName: String) {
         
+        print("openCCTV")
         guard let bundlePath = Bundle.main.path(forResource: "CCTVPOC", ofType: "bundle") else { return }
         let bundle = Bundle(path: bundlePath)
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
         
+
         DispatchQueue.main.async {
             let vc = UIStoryboard(name: "CCTV", bundle: bundle).instantiateViewController(withIdentifier: "CCTVVC") as! CCTVVC
             vc.setup(accessToken: accessToken, appKey: appKey, serialNumber: serialNumber, verificationCode: verificationCode, apiServerURL: apiServerURL, authServer: authServer, cameraName: cameraName)
@@ -198,5 +293,46 @@ class CCTVManager: NSObject {
             UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
         }
         
+    }
+    
+    func openFullScreenCCTV(accessToken: String, appKey: String, serialNumber: String, verificationCode: String, apiServerURL: String, authServer: String, cameraName: String) {
+
+        print("openFullScreenCCTV")
+        guard let bundlePath = Bundle.main.path(forResource: "CCTVPOC", ofType: "bundle") else { return }
+        let bundle = Bundle(path: bundlePath)
+
+        DispatchQueue.main.async {
+            let vc = UIStoryboard(name: "CCTV", bundle: bundle).instantiateViewController(withIdentifier: "FullscreenCCTV") as! FullscreenCCTV
+            vc.setup(accessToken: accessToken, appKey: appKey, serialNumber: serialNumber, verificationCode: verificationCode, apiServerURL: apiServerURL, authServer: authServer, cameraName: cameraName)
+            vc.modalPresentationStyle = .fullScreen
+
+            UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
+        }
+
+    }
+
+
+}
+
+extension UIWindow {
+    static func getTopViewController() -> UIViewController? {
+        if #available(iOS 13, *){
+            let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            
+            if var topController = keyWindow?.rootViewController {
+                while let presentedViewController = topController.presentedViewController {
+                    topController = presentedViewController
+                }
+                return topController
+            }
+        } else {
+            if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                while let presentedViewController = topController.presentedViewController {
+                    topController = presentedViewController
+                }
+                return topController
+            }
+        }
+        return nil
     }
 }
