@@ -22,7 +22,11 @@
   "keywords": [
     "react-native"
   ],
-  "author": "Forviz",
+  "author": {
+    "username": "forviz",
+    "name": "forviz",
+    "email": "nat@forviz.com"
+  },
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
