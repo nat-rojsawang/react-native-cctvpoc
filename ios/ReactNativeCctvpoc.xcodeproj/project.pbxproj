@@ -61,11 +61,7 @@
 				C31AAE4B258943D900B0DF1C /* assets.xcassets */,
 				C3EC44092587E1DE00AA956D /* CCTVVC.swift */,
 				C3EC43E12587E18C00AA956D /* CCTV.storyboard */,
-<<<<<<< HEAD
-				BF8FC05725B6F80E00A18AE6 /* FullscreenCCTV.swift */,
-=======
 				BFDA53DF25AC4E5E0034B1E4 /* FullscreenCCTV.swift */,
->>>>>>> 7d5bb779e59e148279406e5af24120ce080b2bda
 				134814211AA4EA7D00B7C361 /* Products */,
 				C3EC44082587E1DD00AA956D /* ReactNativeCctvpoc-Bridging-Header.h */,
 			);
