@@ -139,6 +139,16 @@ class CCTVVC: UIViewController {
             if urlString != nil, let url = URL(string: urlString!) {
                 if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                     UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+
+                    let alert = UIAlertController(title: "", message: "บันทึกไปยัง อัลบั้ม", preferredStyle: .alert)
+                    self.present(alert, animated: true, completion: nil)
+
+                    // change to desired number of seconds (in this case ... seconds)
+                    let when = DispatchTime.now() + 2
+                    DispatchQueue.main.asyncAfter(deadline: when){
+                        // your code with delay
+                        alert.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         }
