@@ -75,8 +75,12 @@ class CCTVVC: UIViewController {
     }
 
     func initiateConfigurations() {
-        EZGlobalSDK.initLib(withAppKey: appKey)
-        EZGlobalSDK.setAccessToken(accessToken)
+        #if targetEnvironment(simulator)
+            // Do nothing
+        #else
+            EZGlobalSDK.initLib(withAppKey: appKey)
+            EZGlobalSDK.setAccessToken(accessToken)
+        #endif
         
         micButton?.isHidden = false;
         micActiveButton?.isHidden = true;
@@ -103,11 +107,15 @@ class CCTVVC: UIViewController {
     func preparePlayer() {
         self.setTitle(title: cameraName)
         
-        player = EZGlobalSDK.createPlayer(withDeviceSerial: deviceSerialNumber, cameraNo: cameraNumber)
-        player?.delegate = self
-        player?.setPlayVerifyCode(verificationCode)
-        player?.setPlayerView(playerView)
-        player?.startRealPlay()
+        #if targetEnvironment(simulator)
+            // Do nothing
+        #else
+            player = EZGlobalSDK.createPlayer(withDeviceSerial: deviceSerialNumber, cameraNo: cameraNumber)
+            player?.delegate = self
+            player?.setPlayVerifyCode(verificationCode)
+            player?.setPlayerView(playerView)
+            player?.startRealPlay()
+        #endif
     }
     
     @IBAction func onMicNone(_ sender: Any) {
@@ -135,23 +143,27 @@ class CCTVVC: UIViewController {
 //    }
 
     @IBAction func captureScreen() {
-        EZGlobalSDK.captureCamera(deviceSerialNumber, cameraNo: cameraNumber) { [self] urlString, _ in
-            if urlString != nil, let url = URL(string: urlString!) {
-                if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        #if targetEnvironment(simulator)
+            // Do nothing
+        #else
+            EZGlobalSDK.captureCamera(deviceSerialNumber, cameraNo: cameraNumber) { [self] urlString, _ in
+                if urlString != nil, let url = URL(string: urlString!) {
+                    if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 
-                    let alert = UIAlertController(title: "", message: "บันทึกไปยัง อัลบั้ม", preferredStyle: .alert)
-                    self.present(alert, animated: true, completion: nil)
+                        let alert = UIAlertController(title: "", message: "บันทึกไปยัง อัลบั้ม", preferredStyle: .alert)
+                        self.present(alert, animated: true, completion: nil)
 
-                    // change to desired number of seconds (in this case ... seconds)
-                    let when = DispatchTime.now() + 2
-                    DispatchQueue.main.asyncAfter(deadline: when){
-                        // your code with delay
-                        alert.dismiss(animated: true, completion: nil)
+                        // change to desired number of seconds (in this case ... seconds)
+                        let when = DispatchTime.now() + 2
+                        DispatchQueue.main.asyncAfter(deadline: when){
+                            // your code with delay
+                            alert.dismiss(animated: true, completion: nil)
+                        }
                     }
                 }
             }
-        }
+        #endif
     }
     
     @IBAction func back() {
@@ -205,8 +217,12 @@ class CCTVVC: UIViewController {
     }
     
     func setVideoQuality(qualityInt: Int) {
-        EZGlobalSDK.setVideoLevel(deviceSerialNumber, cameraNo: cameraNumber, videoLevel: qualityInt) { (error) in
-        }
+        #if targetEnvironment(simulator)
+            // Do nothing
+        #else
+            EZGlobalSDK.setVideoLevel(deviceSerialNumber, cameraNo: cameraNumber, videoLevel: qualityInt) { (error) in
+            }
+        #endif
     }
     
     @IBAction func openFullScreenCCTV() {
@@ -242,33 +258,65 @@ class CCTVVC: UIViewController {
 
     @objc func rorateUp(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .up, action: .start, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .up, action: .start, speed: cameraRotationSpeed) { _ in }
+            #endif
         } else if gesture.state == .ended {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .up, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .up, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #endif
         }
     }
 
     @objc func rorateDown(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .down, action: .start, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .down, action: .start, speed: cameraRotationSpeed) { _ in }
+            #endif
         } else if gesture.state == .ended {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .down, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .down, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #endif
         }
     }
 
     @objc func rorateLeft(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .left, action: .start, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .left, action: .start, speed: cameraRotationSpeed) { _ in }
+            #endif
         } else if gesture.state == .ended {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .left, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .left, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #endif
         }
     }
 
     @objc func rorateRight(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .right, action: .start, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .right, action: .start, speed: cameraRotationSpeed) { _ in }
+            #endif
         } else if gesture.state == .ended {
-            EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .right, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #if targetEnvironment(simulator)
+                // Do nothing
+            #else
+                EZGlobalSDK.controlPTZ(deviceSerialNumber, cameraNo: cameraNumber, command: .right, action: .stop, speed: cameraRotationSpeed) { _ in }
+            #endif
         }
     }
 }

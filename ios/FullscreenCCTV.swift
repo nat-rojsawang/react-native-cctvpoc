@@ -34,12 +34,16 @@ class FullscreenCCTV: UIViewController {
     }
 
     func setUpPlayer() {
-        player = EZGlobalSDK.createPlayer(withDeviceSerial: deviceSerialNumber, cameraNo: cameraNumber)
-        player?.delegate = self
-        player?.setPlayVerifyCode(verificationCode)
-        player?.setPlayerView(self.playerView)
-        player?.startRealPlay()
-        self.checkMuteSelection()
+        #if targetEnvironment(simulator)
+            // Do nothing
+        #else
+            player = EZGlobalSDK.createPlayer(withDeviceSerial: deviceSerialNumber, cameraNo: cameraNumber)
+            player?.delegate = self
+            player?.setPlayVerifyCode(verificationCode)
+            player?.setPlayerView(self.playerView)
+            player?.startRealPlay()
+            self.checkMuteSelection()
+        #endif
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -141,8 +145,12 @@ class FullscreenCCTV: UIViewController {
     }
     
     func setVideoQuality(qualityInt: Int) {
-        EZGlobalSDK.setVideoLevel(deviceSerialNumber, cameraNo: cameraNumber, videoLevel: qualityInt) { (error) in
-        }
+        #if targetEnvironment(simulator)
+            // Do nothing
+        #else
+            EZGlobalSDK.setVideoLevel(deviceSerialNumber, cameraNo: cameraNumber, videoLevel: qualityInt) { (error) in
+            }
+        #endif
     }
     
     @IBAction func openNomalScreenCCTV() {
