@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "microphone_pressed.png",
+      "filename" : "arrow_right.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "microphone_pressed@2x.png",
+      "filename" : "arrow_right@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

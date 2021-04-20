@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "back_button.png",
+      "filename" : "ellipse_frame_2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "back_button@2x.png",
+      "filename" : "ellipse_frame_2@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

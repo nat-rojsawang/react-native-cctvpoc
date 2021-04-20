@@ -1,11 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "arrow_up.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ellipse_shape@2x.png",
+      "filename" : "arrow_up@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
