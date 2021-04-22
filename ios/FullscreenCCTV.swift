@@ -46,10 +46,13 @@ class FullscreenCCTV: UIViewController {
         #endif
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeRight
+//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        return .landscapeRight
+//    }
+    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return UIInterfaceOrientation.landscapeRight
     }
-
+    
     override var shouldAutorotate: Bool {
         return true
     }

@@ -85,8 +85,6 @@ class CCTVVC: UIViewController {
         micButton?.isHidden = false;
         micActiveButton?.isHidden = true;
         
-//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(gesture:)))
-//        micButton!.addGestureRecognizer(longPress)
         
         let rorateUp = UILongPressGestureRecognizer(target: self, action: #selector(rorateUp(gesture:)))
         rorateUpButton!.addGestureRecognizer(rorateUp)
@@ -132,15 +130,7 @@ class CCTVVC: UIViewController {
         player?.stopVoiceTalk();
     }
     
-//    @objc func longPress(gesture: UILongPressGestureRecognizer) {
-//        if gesture.state == .began {
-//            self.micButton?.setImage(UIImage(named: "microphone_pressed"), for: .normal)
-//            player?.startVoiceTalk()
-//        } else if gesture.state == .ended {
-//            self.micButton?.setImage(UIImage(named: "microphone_default"), for: .normal)
-//            player?.stopVoiceTalk()
-//        }
-//    }
+
 
     @IBAction func captureScreen() {
         #if targetEnvironment(simulator)
@@ -238,10 +228,6 @@ class CCTVVC: UIViewController {
 
     }
     //    @IBAction func openNomalScreenCCTV() {
-//        self.dismiss(animated: true) {
-//            CCTVManager.shared.openCCTV(accessToken: self.accessToken, appKey: self.appKey, serialNumber: self.deviceSerialNumber, verificationCode: self.verificationCode, apiServerURL: self.apiServerURL, authServer: self.authServer, cameraName: self.cameraName)
-//        }
-//    }
 
     // =====================================================
 
